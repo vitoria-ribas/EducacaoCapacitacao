@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Jovem Oportunidade - Parauapebas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/feather-icons" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo"><i data-feather="compass"></i> Jovem<span>Oportunidade</span></div>
+    <nav class="desktop-nav-links" id="desktopNav">
+      <a data-screen="home" class="active">Início</a>
+      <a data-screen="explore">Explorar</a>
+      <a data-screen="instituicoes">Instituições</a>
+    </nav>
+    <div class="user-section">
+      <span class="welcome-text">Bem-vindo(a)!</span>
+    </div>
+  </header>
+
+  <main class="content" id="mainContent">
+    <!-- HOME -->
+    <section id="home-screen" class="screen active">
+      <div class="search-container">
+        <i data-feather="search" class="icon"></i>
+        <input type="text" id="mainSearch" placeholder="Buscar cursos, vagas, instituições...">
+        <i data-feather="sliders" class="icon" id="filterIcon"></i>
+      </div>
+      <div class="chips" id="homeChips">
+        <span class="chip active" data-filter="all">Todos</span>
+        <span class="chip" data-filter="presencial">Presencial</span>
+        <span class="chip" data-filter="online">Online</span>
+        <span class="chip" data-filter="gratuito">Gratuito</span>
+      </div>
+      <button id="btnAddOportunidade" class="cta-button add-btn">
+        <i data-feather="plus-circle"></i> Nova Oportunidade
+      </button>
+      <h3 class="section-title">Destaques da Semana</h3>
+      <div class="horizontal-scroll" id="highlightsContainer"></div>
+      <h3 class="section-title">Categorias</h3>
+      <div class="category-grid" id="categoryGrid">
+        <div class="category-item" data-cat="enem"><i data-feather="book-open"></i> ENEM</div>
+        <div class="category-item" data-cat="universidade"><i data-feather="award"></i> Universidades</div>
+        <div class="category-item" data-cat="cursos"><i data-feather="code"></i> Cursos Técnicos</div>
+        <div class="category-item" data-cat="idiomas"><i data-feather="globe"></i> Idiomas</div>
+        <div class="category-item" data-cat="jovemaprendiz"><i data-feather="briefcase"></i> Jovem Aprendiz</div>
+        <div class="category-item" data-cat="eventos"><i data-feather="calendar"></i> Eventos</div>
+      </div>
+      <h3 class="section-title">Novas Oportunidades</h3>
+      <div id="feedContainer" class="cards-list"></div>
+    </section>
+
+    <!-- EXPLORAR -->
+    <section id="explore-screen" class="screen">
+      <div class="search-container">
+        <i data-feather="search" class="icon"></i>
+        <input type="text" id="exploreSearch" placeholder="Filtrar resultados...">
+      </div>
+      <div class="view-toggle">
+        <button id="listViewBtn" class="active"><i data-feather="list"></i> Lista</button>
+        <button id="mapViewBtn"><i data-feather="map"></i> Mapa</button>
+      </div>
+      <div id="listViewContainer" class="cards-list"></div>
+      <div id="mapViewContainer" style="display: none;">
+        <div id="mapContainer"></div>
+      </div>
+    </section>
+
+    <!-- INSTITUIÇÕES -->
+    <section id="instituicoes-screen" class="screen">
+      <h2 class="screen-heading">Instituições de Ensino em Parauapebas</h2>
+      <div id="listaInstituicoes" class="cards-list"></div>
+    </section>
+
+    <!-- CADASTRAR OPORTUNIDADE -->
+    <section id="cadastro-screen" class="screen">
+      <button id="backFromCadastro" class="btn-back"><i data-feather="arrow-left"></i> Voltar</button>
+      <h2 class="screen-heading">Cadastrar Nova Oportunidade</h2>
+      <form id="formAddOportunidade" class="form-cadastro">
+        <input type="text" id="addTitulo" placeholder="Título da oportunidade" required>
+        <div class="form-row">
+          <select id="addTipo" required>
+            <option value="">Tipo</option>
+            <option value="Curso">Curso</option>
+            <option value="Vaga">Vaga</option>
+            <option value="Evento">Evento</option>
+            <option value="Exame">Exame</option>
+          </select>
+          <select id="addCategoria" required>
+            <option value="">Categoria</option>
+            <option value="enem">ENEM</option>
+            <option value="universidade">Universidade</option>
+            <option value="cursos">Curso Técnico</option>
+            <option value="idiomas">Idiomas</option>
+            <option value="jovemaprendiz">Jovem Aprendiz</option>
+            <option value="eventos">Evento</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <select id="addFormato" required>
+            <option value="">Formato</option>
+            <option value="presencial">Presencial</option>
+            <option value="online">Online</option>
+          </select>
+          <input type="text" id="addData" placeholder="Data (ex: 20/08/2026)" required>
+        </div>
+        <input type="text" id="addLocal" placeholder="Local" required>
+        <textarea id="addDescricao" placeholder="Descrição" rows="4" required></textarea>
+        <input type="text" id="addRequisitos" placeholder="Requisitos">
+        <div class="form-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="addCertificacao"> Oferece certificação
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="addDestaque"> Destacar na página inicial
+          </label>
+        </div>
+        <div class="form-row">
+          <input type="text" id="addLat" placeholder="Latitude (opcional)">
+          <input type="text" id="addLng" placeholder="Longitude (opcional)">
+        </div>
+        <button type="submit" class="cta-button">Salvar Oportunidade</button>
+      </form>
+    </section>
+
+    <!-- DETALHES -->
+    <section id="detail-screen" class="screen">
+      <button id="backFromDetail" class="btn-back"><i data-feather="arrow-left"></i> Voltar</button>
+      <div id="detailContent"></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" id="bottomNav">
+    <button data-screen="home" class="active"><i data-feather="home"></i><span>Início</span></button>
+    <button data-screen="explore"><i data-feather="compass"></i><span>Explorar</span></button>
+    <button data-screen="instituicoes"><i data-feather="map-pin"></i><span>Instituições</span></button>
+  </nav>
+</body>
+</html>
