@@ -1,4 +1,3 @@
-link: https://dheferson-santos.github.io/EducacaoCapacitacao/
 # Jovem Oportunidade – Parauapebas
 
 Plataforma web que centraliza e divulga oportunidades de capacitação profissional e educacional para jovens da cidade de Parauapebas.
@@ -37,3 +36,5 @@ Além de resolver o problema da comunidade, o projeto foi pensado para **ensinar
 - Boas práticas de código limpo
 - Uso do Git para controle de versão
 - Colaboração via GitHub (fork, branch, pull request)
+
+## 📁 Estrutura do projeto
