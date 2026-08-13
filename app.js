@@ -38,7 +38,7 @@ const instituicoes = [
     endereco: "Rodovia Dr. Faisal Salmen, s/n, Bairro: União, Parauapebas - PA CEP: 68515-000.",
     lat: -6.064257, lng: -49.915106,
     foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSvEfBYY4204m7BV_dMnRvCUpWaYmH258ISe5nyFpEpw&s=10",
-    site: "https://www.ifpa.edu.br/"
+    site: "https://www.senaipa.org.br/"
   },
   {
     nome: "SENAI Parauapebas",
@@ -47,7 +47,7 @@ const instituicoes = [
     endereco: "R. F, 164 - Cidade Nova, Parauapebas - PA, 68515-000",
     lat: -6.066373, lng: -49.910313,
     foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN6B6kMD7tlCcxa6ZniTiO4VVLVy3O3cHj2_4a5vJ-Aw&s=10",
-    site: "https://www.senai.br/"
+    site: "https://www.senaipa.org.br/"
   },
   {
     nome: "SENAC Parauapebas",

@@ -1,4 +1,4 @@
-link: https://dheferson-santos.github.io/EducacaoCapacitacao/
+link: https://vitoria-ribas.github.io/EducacaoCapacitacao/
 # Jovem Oportunidade – Parauapebas
 
 Plataforma web que centraliza e divulga oportunidades de capacitação profissional e educacional para jovens da cidade de Parauapebas.
