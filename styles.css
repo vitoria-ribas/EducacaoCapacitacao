@@ -1,486 +1,70 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ============================================
+   THEME.CSS - Modo Claro / Escuro
+   Carregado DEPOIS do styles.css.
+   Como o styles.css já usa variáveis CSS
+   (--bg, --surface, --text, etc.), aqui a gente
+   só precisa redefinir essas variáveis quando o
+   modo escuro estiver ativo.
+   ============================================ */
 
-:root {
-  --primary: #FF6B35;
-  --primary-hover: #e55a2b;
-  --secondary: #004E64;
-  --bg: #F9F9FC;
-  --surface: #FFFFFF;
-  --text: #1C1C1E;
-  --text-secondary: #6B7280;
+html[data-theme="dark"] {
+  --primary: #FF7A47;
+  --primary-hover: #ff8f63;
+  --secondary: #3FB6D3;
+  --bg: #121214;
+  --surface: #1E1E22;
+  --text: #F2F2F2;
+  --text-secondary: #A1A1AA;
   --success: #10B981;
   --danger: #EF4444;
-  --border: #E5E7EB;
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  --radius: 16px;
-  --radius-sm: 10px;
-  --font-heading: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --border: #333338;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+/* Transição suave ao trocar de tema */
+body,
+.topbar,
+.bottom-nav,
+.card,
+.instituicao-card,
+.search-container,
+.chip,
+.category-item,
+.form-cadastro,
+.view-toggle button,
+.info-section,
+#mapContainer,
+#map-container {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
-/* TOPBAR */
-.topbar {
-  display: none;
-  background: var(--surface);
-  padding: 0 24px;
-  height: 70px;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: var(--shadow);
+/* O mapa (Leaflet) tem tiles próprios; só suavizamos um pouco no dark */
+html[data-theme="dark"] #mapContainer,
+html[data-theme="dark"] #map-container {
+  filter: brightness(0.9) contrast(1.05);
 }
 
-.topbar .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: var(--secondary);
-}
-
-.topbar .logo span { color: var(--primary); }
-
-.desktop-nav-links {
-  display: flex;
-  gap: 24px;
-  font-weight: 500;
-}
-
-.desktop-nav-links a {
-  text-decoration: none;
-  color: var(--text);
-  padding: 8px 0;
-  border-bottom: 3px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-}
-
-.desktop-nav-links a.active,
-.desktop-nav-links a:hover {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
-}
-
-.topbar .user-section {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.welcome-text {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-/* CONTEÚDO */
-.content {
-  flex: 1;
-  padding: 16px;
-  padding-bottom: 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.screen {
-  display: none;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.screen.active { display: flex; }
-
-/* BUSCA */
-.search-container {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: var(--shadow);
-}
-
-.search-container input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  font-family: var(--font-body);
+/* Botão de alternância de tema */
+.theme-toggle-btn {
   background: transparent;
-}
-
-.search-container .icon { color: var(--text-secondary); }
-
-/* CHIPS */
-.chips {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-
-.chip {
-  background: var(--surface);
   border: 1px solid var(--border);
-  padding: 8px 16px;
-  border-radius: 100px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.2s;
-  white-space: nowrap;
-}
-
-.chip.active,
-.chip:hover {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
-
-/* BOTÃO ADICIONAR */
-.add-btn {
-  background: var(--success);
-  margin-top: 8px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-}
-
-.add-btn:hover { background: #059669; }
-
-/* CARDS */
-.card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: transform 0.2s;
   cursor: pointer;
-}
-
-.card:hover { transform: translateY(-2px); }
-
-.card .tag {
-  display: inline-block;
-  background: var(--secondary);
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 100px;
-  letter-spacing: 0.5px;
-  align-self: flex-start;
-}
-
-.card h3 {
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
   color: var(--text);
+  transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
-.card .meta {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
+.theme-toggle-btn:hover {
+  background-color: var(--border);
+  transform: rotate(15deg);
 }
 
-.card .meta i { margin-right: 4px; }
-
-/* CARDS DE INSTITUIÇÃO */
-.instituicao-card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  position: relative;
-}
-
-.instituicao-foto {
-  display: block; margin: auto;
-  width: 20%;
-  height: auto;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-  margin-bottom: 12px;
-  
-}
-
-.instituicao-card h4 {
-  font-family: var(--font-heading);
-  color: var(--secondary);
-}
-
-.instituicao-card .contato {
-  font-size: 0.9rem;
-  color: var(--text);
-}
-
-.cards-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* CATEGORIAS */
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.category-item {
-  background: var(--surface);
-  border-radius: var(--radius-sm);
-  padding: 16px 8px;
-  text-align: center;
-  box-shadow: var(--shadow);
-  font-weight: 500;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  color: var(--text);
-}
-
-.category-item i { color: var(--primary); }
-
-.category-item:hover {
-  background: var(--primary);
-  color: white;
-}
-
-.category-item:hover i { color: white; }
-
-/* TÍTULOS */
-.section-title {
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  margin: 8px 0 4px;
-}
-
-.screen-heading { font-family: var(--font-heading); }
-
-/* SCROLL HORIZONTAL */
-.horizontal-scroll {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  scroll-snap-type: x mandatory;
-}
-
-.horizontal-scroll .card {
-  min-width: 260px;
-  max-width: 300px;
-  scroll-snap-align: start;
-}
-
-/* DETALHES */
-.detail-hero {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  border-radius: var(--radius);
-  padding: 20px;
-}
-
-.info-section {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
-  margin-bottom: 12px;
-}
-
-.cta-button {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 100px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  transition: 0.2s;
-}
-
-.cta-button:hover { background: var(--primary-hover); }
-
-.btn-small {
-  width: auto;
-  padding: 8px 16px;
-}
-
-.btn-back {
-  background: none;
-  border: none;
-  cursor: pointer;
-  align-self: flex-start;
-  color: var(--text);
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* VISUALIZAÇÃO (LISTA/MAPA) */
-.view-toggle {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.view-toggle button {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 8px 16px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-body);
-}
-
-.view-toggle button.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
-
-/* MAPA */
-#map-container {
-  height: 400px;
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin-top: 12px;
-  background: #ddd;
-}
-
-/* FORMULÁRIO DE CADASTRO */
-.form-cadastro {
-  background: var(--surface);
-  padding: 24px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-width: 600px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.form-cadastro input,
-.form-cadastro select,
-.form-cadastro textarea {
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-}
-
-.form-row {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.form-row > * { flex: 1 1 150px; }
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-/* BOTTOM NAV */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--surface);
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 16px;
-  border-top: 1px solid var(--border);
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-  z-index: 200;
-}
-
-.bottom-nav button {
-  background: none;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  cursor: pointer;
-  padding: 4px 12px;
-  border-radius: 8px;
-  font-family: var(--font-body);
-}
-
-.bottom-nav button.active {
-  color: var(--primary);
-  font-weight: 600;
-}
-
-/* UTILITÁRIOS */
-.mt-8 { margin-top: 8px; }
-.mt-16 { margin-top: 16px; }
-
-/* RESPONSIVO */
-@media (min-width: 768px) {
-  .topbar { display: flex; }
-  .bottom-nav { display: none; }
-  .content { padding-top: 24px; padding-bottom: 24px; }
-  .category-grid { grid-template-columns: repeat(6, 1fr); }
-  .horizontal-scroll { overflow-x: visible; flex-wrap: wrap; }
-  .horizontal-scroll .card { min-width: 220px; }
+.theme-toggle-btn i {
+  width: 20px;
+  height: 20px;
 }

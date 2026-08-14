@@ -78,6 +78,35 @@ const instituicoes = [
   }
 ];
 
+// ---------- TEMA CLARO / ESCURO ----------
+function aplicarTema(tema) {
+  document.documentElement.setAttribute('data-theme', tema);
+  localStorage.setItem('tema', tema);
+  const icon = document.getElementById('themeIcon');
+  if (icon) {
+    icon.setAttribute('data-feather', tema === 'dark' ? 'sun' : 'moon');
+    if (window.feather) feather.replace();
+  }
+}
+
+function inicializarTema() {
+  const salvo = localStorage.getItem('tema');
+  if (salvo) {
+    aplicarTema(salvo);
+  } else {
+    const prefereEscuro = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    aplicarTema(prefereEscuro ? 'dark' : 'light');
+  }
+}
+
+function alternarTema() {
+  const atual = document.documentElement.getAttribute('data-theme') || 'light';
+  aplicarTema(atual === 'dark' ? 'light' : 'dark');
+}
+
+// Aplica o tema o quanto antes (evita "flash" de tela clara)
+inicializarTema();
+
 // ---------- PERSISTÊNCIA ----------
 function carregarOportunidades() {
   const salvas = localStorage.getItem('oportunidades');
@@ -329,6 +358,8 @@ document.getElementById('categoryGrid').addEventListener('click', (e) => {
     feather.replace();
   }
 });
+
+document.getElementById('themeToggle').addEventListener('click', alternarTema);
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
